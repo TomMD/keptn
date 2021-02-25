@@ -4,6 +4,11 @@ VERSION=$1
 IMAGE_TAG=$2
 KEPTN_SPEC_VERSION=$3
 
+if [ $# -ne 3 ]; then
+  echo "Usage: $0 VERSION IMAGE_TAG KEPTN_SPEC_VERSION"
+  exit
+fi
+
 if [ -z "$VERSION" ]; then
   echo "No Version set, exiting..."
   exit 1
@@ -88,21 +93,6 @@ if [ $? -ne 0 ]; then
   echo "::error Helm Chart for jmeter-svc has templating errors -exiting"
   exit 1
 fi
-
-
-
-# download index.yaml chart
-#gsutil cp gs://keptn-installer/index.yaml keptn-charts/index.yaml
-#
-#helm repo index keptn-charts --url https://storage.googleapis.com/keptn-installer/ --merge keptn-charts/index.yaml
-#if [ $? -ne 0 ]; then
-#  echo "Error generating index.yaml, exiting..."
-#  exit 1
-#fi
-#
-## upload to gcloud
-#gsutil cp keptn-charts/index.yaml gs://keptn-installer/index.yaml
-#gsutil cp keptn-charts/keptn-${VERSION}.tgz gs://keptn-installer/keptn-${VERSION}.tgz
 
 
 echo "Generated files:"
